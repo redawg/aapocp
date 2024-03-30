@@ -7,36 +7,21 @@
     - name: Create a VirtualMachine
       redhat.openshift_virtualization.kubevirt_vm:
         state: present
-        name: testvm
-        namespace: default
+        name: windows-2019
+        namespace: openshift-virualization-os-images
         labels:
-          app: test
+          app: 
         instancetype:
           name: u1.medium
         preference:
-          name: fedora
+          name: windoows-2019
         spec:
-          domain:
-            devices:
-              interfaces:
-                - name: default
-                  masquerade: {}
-                - name: bridge-network
-                  bridge: {}
-          networks:
-           - name: default
-             pod: {}
-           - name: bridge-network
-             multus:
-               networkName: kindexgw
-          volumes:
-            - containerDisk:
-                image: quay.io/containerdisks/fedora:latest
-              name: containerdisk
-            - cloudInitNoCloud:
-                userData: |-
-                #cloud-config
-                # The default username is: fedora
-                ssh_authorized_keys:
-                   - ssh-ed25519 AAAA...
-              name: cloudinit 
+          source:
+            http:
+              url: 'https://www.opentlc.com/download/ocp4_virt_foundations/Windows2019.iso'
+          storage:
+            resources:
+              requests:
+                storage: 5Gi
+
+            
